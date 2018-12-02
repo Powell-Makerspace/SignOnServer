@@ -2,10 +2,7 @@ package org.powellmakerspace.SignOnServer.models;
 
 import org.powellmakerspace.SignOnServer.models.enums.VisitPurpose;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Visit {
@@ -13,7 +10,8 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long visitId;
-    private long memberId;
+    @OneToOne //ToDo Logically Not Correct.
+    private Member member;
     private long arrivalTime;
     private long departureTime;
     private VisitPurpose visitPurpose;
@@ -30,13 +28,13 @@ public class Visit {
 
     /**
      * Constructor for a visit object
-     * @param memberId long foreign key connecting the visit to the member who made it
+     * @param member Member member who made the visit
      * @param arrivalTime long timestamp for the arrival time and date
      * @param departureTime long timestamp for the departure time and date
      * @param visitPurpose Enum description of the purpose of visit
      */
-    public Visit(long memberId, long arrivalTime, long departureTime, VisitPurpose visitPurpose){
-        this.memberId = memberId;
+    public Visit(Member member, long arrivalTime, long departureTime, VisitPurpose visitPurpose){
+        this.member = member;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
         this.visitPurpose = visitPurpose;
@@ -55,12 +53,12 @@ public class Visit {
         this.visitId = visitId;
     }
 
-    public long getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return this.member;
     }
 
-    public void setMemberId(long memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public long getArrivalTime() {

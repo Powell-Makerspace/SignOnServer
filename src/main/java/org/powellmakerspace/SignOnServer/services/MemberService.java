@@ -1,12 +1,19 @@
 package org.powellmakerspace.SignOnServer.services;
 
+import org.powellmakerspace.SignOnServer.exception.ResourceNotFoundException;
 import org.powellmakerspace.SignOnServer.models.Member;
 import org.powellmakerspace.SignOnServer.models.enums.MembershipType;
 import org.powellmakerspace.SignOnServer.repositories.MemberRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class MemberService {
+
+    private static Logger logger = LoggerFactory.getLogger(MemberService.class);
 
     private MemberRepository memberRepository;
 
@@ -41,13 +48,21 @@ public class MemberService {
 
 
     /**
-     * Gets member in repository with given memberId
+     * Gets member in repository with given memberId.
+     * Throws ResourceNotFoundException if no Member by that memberId is present.
      * @param memberId memberId to be searched
      * @return member object with searched memberId
      */
-    public Member getMember(long memberId) {
-        // This should look for an IsPresent Flag Thingy
-        return memberRepository.findById(memberId).get();
+    public Member getMember(long memberId) throws ResourceNotFoundException{
+        Optional<Member> member = memberRepository.findById(memberId);
+        if (member.isPresent()){
+            return member.get();
+        }
+        else {
+            ResourceNotFoundException resourceNotFoundException = new ResourceNotFoundException();
+            logger.debug("No member found by {}", memberId, resourceNotFoundException);
+            throw resourceNotFoundException;
+        }
     }
 
 
@@ -65,7 +80,7 @@ public class MemberService {
         else if (memberName != null && membershipType == null) {
             return memberRepository.findMembersByMemberNameLike(memberName);
         }
-        else if (memberName == null && membershipType != null) {
+        else if (memberName == null /* && membershipType != null */) { // Comment not logically needed for functionality
             return memberRepository.findMembersByMembershipType(membershipType);
         }
         else {

@@ -5,5 +5,10 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface VisitRepository extends CrudRepository<Visit, Long> {
 
-    Iterable<Visit> findVisitsByDepartureTimeIsNull();
+    Iterable<Visit> findAllVisitsByDepartureTimeIsNull();
+
+    Iterable<Visit> findAllVisitsByMemberId(long memberId);
+
+    Iterable<Visit> findAllVisitsByArrivalTimeBetween(long startDate, long endDate);
+
 }

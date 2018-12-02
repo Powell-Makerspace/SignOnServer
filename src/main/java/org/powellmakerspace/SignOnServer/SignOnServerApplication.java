@@ -55,14 +55,14 @@ public class SignOnServerApplication {
 				// Create Dummy Data for Visits
 				for (int i = 0; i<500; i++){
 					Visit visit = new Visit();
-					visit.setMemberId(faker.random().nextLong(500));
+//					visit.setMember(memberService.getMember(faker.random().nextLong(500L)));
 					// Random Time up to Jan. 1, 2019
 					visit.setArrivalTime(faker.random().nextLong(1546300800L));
 					// Random time of visit less than 1 day
 					visit.setDepartureTime(visit.getArrivalTime() + faker.random().nextLong(60*60*24));
 					visit.setVisitPurpose(visitPurposes[faker.random().nextInt(visitPurposes.length)]);
 
-					visitService.createVisit(visit);
+					visitService.createVisit(visit, faker.random().nextLong(500L));
 				}
 
 			}

@@ -39,7 +39,10 @@ public class VisitController {
             )
             @RequestBody Visit visit
     ){
-        visitService.createVisit(visit);
+        /*
+ToDo Figure out how to properly pass in the Visit Member information
+visitService.createVisit(visit);
+*/
     }
 
 
@@ -86,10 +89,32 @@ public class VisitController {
 
     @ApiOperation(
             value = "getVisits",
-            notes = "Retrieves all visits in the repository"
+            notes = "Retrieves all visits in the repository",
+            response = Visit.class,
+            responseContainer = "List"
     )
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public Iterable<Visit> getVisits(){
-        return visitService.getVisits();
+    public Iterable<Visit> getVisits(
+            @ApiParam(
+                    value = "long memberId filter"
+            )
+            @RequestParam(value = "memberId") long memberId,
+            @ApiParam(
+                    value = "active visits filter"
+            )
+            @RequestParam(value = "active") boolean active,
+            @ApiParam(
+                    value = "long starting date filter"
+            )
+            @RequestParam(value = "startDate") long startDate,
+            @ApiParam(
+                    value = "long ending date filter"
+            )
+            @RequestParam(value = "endDate") long endDate,
+            @ApiParam(
+                    value = "long duration of visit filter"
+            )
+            @RequestParam(value = "duration") long duration){
+        return visitService.getVisits(memberId, active, startDate, endDate, duration);
     }
 }

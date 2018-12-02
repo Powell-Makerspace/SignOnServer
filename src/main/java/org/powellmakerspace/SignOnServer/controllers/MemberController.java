@@ -3,6 +3,7 @@ package org.powellmakerspace.SignOnServer.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.powellmakerspace.SignOnServer.exception.ResourceNotFoundException;
 import org.powellmakerspace.SignOnServer.models.Member;
 import org.powellmakerspace.SignOnServer.models.enums.MembershipType;
 import org.powellmakerspace.SignOnServer.services.MemberService;
@@ -93,7 +94,8 @@ public class MemberController {
 
     @ApiOperation(
             value = "getMember",
-            notes = "Retrieves a member matching the provided memberId"
+            notes = "Retrieves a member matching the provided memberId",
+            response = Member.class
     )
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Member getMember(
@@ -102,7 +104,7 @@ public class MemberController {
                     required = true
             )
             @PathVariable("id") long memberId
-    ) {
+    ) throws ResourceNotFoundException {
         return memberService.getMember(memberId);
     }
 }
