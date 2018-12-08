@@ -7,8 +7,6 @@ public interface VisitRepository extends CrudRepository<Visit, Long> {
 
     Iterable<Visit> findAllVisitsByDepartureTimeIsNull();
 
-    Iterable<Visit> findAllVisitsByMemberId(long memberId);
-
     Iterable<Visit> findAllVisitsByArrivalTimeBetween(long startDate, long endDate);
 
 }

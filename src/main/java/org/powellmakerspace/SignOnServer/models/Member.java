@@ -1,11 +1,10 @@
 package org.powellmakerspace.SignOnServer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.powellmakerspace.SignOnServer.models.enums.MembershipType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -16,6 +15,10 @@ public class Member {
     private String memberName;
     private MembershipType membershipType;
     private int punchPasses;
+
+    @OneToMany(mappedBy = "member")
+    @JsonIgnore
+    private List<Visit> visits;
 
     /**
      * Constructor for a member object containing no parameters
@@ -73,5 +76,13 @@ public class Member {
 
     public void setPunchPasses(int punchPasses) {
         this.punchPasses = punchPasses;
+    }
+
+    public List<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(List<Visit> visits) {
+        this.visits = visits;
     }
 }

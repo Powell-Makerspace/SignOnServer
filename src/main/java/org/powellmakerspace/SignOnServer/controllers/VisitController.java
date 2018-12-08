@@ -3,6 +3,7 @@ package org.powellmakerspace.SignOnServer.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.powellmakerspace.SignOnServer.exception.ResourceNotFoundException;
 import org.powellmakerspace.SignOnServer.models.Visit;
 import org.powellmakerspace.SignOnServer.services.VisitService;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +39,8 @@ public class VisitController {
                     required = true
             )
             @RequestBody Visit visit
-    ){
-        /*
-ToDo Figure out how to properly pass in the Visit Member information
-visitService.createVisit(visit);
-*/
+    ) {
+        visitService.createVisit(visit);
     }
 
 
@@ -83,7 +81,7 @@ visitService.createVisit(visit);
                     required = true
             )
             @PathVariable("id") long visitId
-    ){
+    ) throws ResourceNotFoundException {
         return visitService.getVisit(visitId);
     }
 
@@ -95,13 +93,6 @@ visitService.createVisit(visit);
     )
     @RequestMapping(path = "", method = RequestMethod.GET)
     public Iterable<Visit> getVisits(
-            @ApiParam(
-                    value = "long memberId filter"
-            )
-            @RequestParam(value = "memberId") long memberId,
-            @ApiParam(
-                    value = "active visits filter"
-            )
             @RequestParam(value = "active") boolean active,
             @ApiParam(
                     value = "long starting date filter"
@@ -115,6 +106,6 @@ visitService.createVisit(visit);
                     value = "long duration of visit filter"
             )
             @RequestParam(value = "duration") long duration){
-        return visitService.getVisits(memberId, active, startDate, endDate, duration);
+        return visitService.getVisits(active, startDate, endDate, duration);
     }
 }

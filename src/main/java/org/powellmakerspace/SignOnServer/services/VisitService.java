@@ -3,12 +3,18 @@ package org.powellmakerspace.SignOnServer.services;
 import org.powellmakerspace.SignOnServer.exception.ResourceNotFoundException;
 import org.powellmakerspace.SignOnServer.models.Visit;
 import org.powellmakerspace.SignOnServer.repositories.VisitRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 @Service
 public class VisitService {
+
+    private static Logger logger = LoggerFactory.getLogger(VisitService.class);
+
 
     private VisitRepository visitRepository;
     private MemberService memberService;
@@ -28,10 +34,8 @@ public class VisitService {
      * Adds new visit into the repository
      * @param visit visit object to add
      */
-    public void createVisit(Visit visit, long memberId) throws ResourceNotFoundException {
-        visit.setMember(memberService.getMember(memberId));
+    public void createVisit(Visit visit){
         visitRepository.save(visit);
-
     }
 
 
@@ -50,35 +54,35 @@ public class VisitService {
      * @param visitId visitId to be searched
      * @return visit object with searched visitId
      */
-    public Visit getVisit(long visitId){
-        // This should look for an IsPresent Flag Thingy
-        return visitRepository.findById(visitId).get();
+    public Visit getVisit(long visitId) throws ResourceNotFoundException{
+        Optional<Visit> visit = visitRepository.findById(visitId);
+        if (visit.isPresent()){
+            return visit.get();
+        }
+        else{
+            ResourceNotFoundException resourceNotFoundException = new ResourceNotFoundException();
+            logger.debug("No visit found by {}", visitId, resourceNotFoundException);
+            throw resourceNotFoundException;
+        }
     }
 
     /**
      * Gets all visits in the repository
      * @return Iterable list of all visit objects in the repository
      */
-    public Iterable<Visit> getVisits(long memberId, boolean active, long startDate, long endDate, long duration){
+    public Iterable<Visit> getVisits(boolean active, long startDate, long endDate, long duration){
         // No parameters entered - find all
-        if (memberId == 0 && !active && startDate == 0 && endDate == 0 && duration == 0) {
+        if ( !active && startDate == 0 && endDate == 0 && duration == 0) {
             return visitRepository.findAll();
         }
-        // memberId entered - find all with that member id
-        else if (memberId != 0 && !active && startDate == 0 && endDate == 0 && duration == 0){
-            return visitRepository.findAllVisitsByMemberId(memberId);
-        }
         // active is true - find all with null departure time
-        else if (memberId == 0 && active && startDate == 0 && endDate == 0 && duration == 0){
+        else if (active && startDate == 0 && endDate == 0 && duration == 0){
             return visitRepository.findAllVisitsByDepartureTimeIsNull();
         }
         // startDate and endDate are non-zero - find all with a startDate between
-        else if (memberId == 0 && !active && startDate != 0 && endDate != 0 && duration == 0){
+        else if (!active && startDate != 0 && endDate != 0 && duration == 0){
             return visitRepository.findAllVisitsByArrivalTimeBetween(startDate, endDate);
         }
-//        else if (memberId == 0 && !active && startDate != 0 && endDate != 0 && duration != 0){
-//            Fill in here with code for filtered by date and duration
-//        }
         // If combination is incorrect, return empty iterable.
         else{
             return new Iterable<Visit>() {

@@ -1,7 +1,7 @@
 package org.powellmakerspace.SignOnServer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.powellmakerspace.SignOnServer.models.enums.VisitPurpose;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,8 +10,16 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long visitId;
-    @OneToOne //ToDo Logically Not Correct.
+
+    @ManyToOne
+    /*
+    We want to make it such that it is not possible to have a null member call.
+    For some reason, the annotation below cannot be made on a ManyToOne relation
+    @Column(nullable = false)
+    */
+    @JsonIgnore
     private Member member;
+
     private long arrivalTime;
     private long departureTime;
     private VisitPurpose visitPurpose;
