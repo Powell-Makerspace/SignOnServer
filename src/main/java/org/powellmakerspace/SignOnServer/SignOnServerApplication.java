@@ -53,7 +53,7 @@ public class SignOnServerApplication {
 				}
 
 //				// Create Dummy Data for Visits
-				for (int i = 0; i<3; i++){
+				for (int i = 0; i<500; i++){
 					Visit visit = new Visit();
 					visit.setMember(memberService.getMember(faker.random().nextLong(500L)));
 					// Random Time up to Jan. 1, 2019
