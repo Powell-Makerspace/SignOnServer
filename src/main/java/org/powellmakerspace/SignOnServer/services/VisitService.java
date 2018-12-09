@@ -7,7 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -18,14 +22,16 @@ public class VisitService {
 
     private VisitRepository visitRepository;
     private MemberService memberService;
+    private EntityManager entityManager;
 
     /**
      * Contructor of the Visit Service
      * @param visitRepository visit repository layer
      */
-    public VisitService(VisitRepository visitRepository, MemberService memberService){
+    public VisitService(VisitRepository visitRepository, MemberService memberService, EntityManager entityManager){
         this.visitRepository = visitRepository;
         this.memberService = memberService;
+        this.entityManager = entityManager;
     }
 
 
@@ -66,32 +72,33 @@ public class VisitService {
         }
     }
 
-    /**
-     * Gets all visits in the repository
-     * @return Iterable list of all visit objects in the repository
-     */
-    public Iterable<Visit> getVisits(boolean active, long startDate, long endDate, long duration){
-        // No parameters entered - find all
-        if ( !active && startDate == 0 && endDate == 0 && duration == 0) {
-            return visitRepository.findAll();
+    public Iterable<Visit> getVisits(boolean active, LocalDateTime startDate, LocalDateTime endDate, long duration){
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Visit> criteriaQuery = criteriaBuilder.createQuery(Visit.class);
+        Root<Visit> root = criteriaQuery.from(Visit.class);
+
+        // Base Query
+        criteriaQuery = criteriaQuery.select(root);
+
+        // Add clauses based on parameters
+        if (active){
+            criteriaQuery = criteriaQuery.where(criteriaBuilder.isTrue(root.get("active")));
         }
-        // active is true - find all with null departure time
-        else if (active && startDate == 0 && endDate == 0 && duration == 0){
-            return visitRepository.findAllVisitsByDepartureTimeIsNull();
+
+        if (startDate != null && endDate == null){
+            criteriaQuery = criteriaQuery.where(criteriaBuilder.greaterThan(root.get("arrivalTime"), startDate));
         }
-        // startDate and endDate are non-zero - find all with a startDate between
-        else if (!active && startDate != 0 && endDate != 0 && duration == 0){
-            return visitRepository.findAllVisitsByArrivalTimeBetween(startDate, endDate);
+        else if (endDate != null && startDate == null){
+            criteriaQuery = criteriaQuery.where(criteriaBuilder.lessThan(root.get("arrivalTime"), endDate));
         }
-        // If combination is incorrect, return empty iterable.
-        else{
-            return new Iterable<Visit>() {
-                @Override
-                public Iterator<Visit> iterator() {
-                    return null;
-                }
-            };
+        else if (startDate != null && endDate != null){
+            criteriaQuery = criteriaQuery.where(criteriaBuilder.between(root.get("arrivalTime"), startDate, endDate));
         }
+
+        return entityManager.createQuery(criteriaQuery).getResultList();
+
     }
 
 }

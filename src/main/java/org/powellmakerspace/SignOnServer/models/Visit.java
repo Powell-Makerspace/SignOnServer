@@ -3,6 +3,7 @@ package org.powellmakerspace.SignOnServer.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.powellmakerspace.SignOnServer.models.enums.VisitPurpose;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Visit {
@@ -20,8 +21,8 @@ public class Visit {
     @JsonIgnore
     private Member member;
 
-    private long arrivalTime;
-    private long departureTime;
+    private LocalDateTime arrivalTime;
+    private LocalDateTime departureTime;
     private VisitPurpose visitPurpose;
 
 
@@ -41,7 +42,7 @@ public class Visit {
      * @param departureTime long timestamp for the departure time and date
      * @param visitPurpose Enum description of the purpose of visit
      */
-    public Visit(Member member, long arrivalTime, long departureTime, VisitPurpose visitPurpose){
+    public Visit(Member member, LocalDateTime arrivalTime, LocalDateTime departureTime, VisitPurpose visitPurpose){
         this.member = member;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
@@ -69,19 +70,19 @@ public class Visit {
         this.member = member;
     }
 
-    public long getArrivalTime() {
+    public LocalDateTime getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(long arrivalTime) {
+    public void setArrivalTime(LocalDateTime arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public long getDepartureTime() {
+    public LocalDateTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(long departureTime) {
+    public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
     }
 

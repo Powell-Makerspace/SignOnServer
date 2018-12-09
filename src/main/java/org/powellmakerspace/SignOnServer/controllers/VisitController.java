@@ -3,10 +3,13 @@ package org.powellmakerspace.SignOnServer.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.powellmakerspace.SignOnServer.exception.ResourceNotFoundException;
 import org.powellmakerspace.SignOnServer.models.Visit;
 import org.powellmakerspace.SignOnServer.services.VisitService;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @Api(
         value = "Visit API",
@@ -93,19 +96,28 @@ public class VisitController {
     )
     @RequestMapping(path = "", method = RequestMethod.GET)
     public Iterable<Visit> getVisits(
-            @RequestParam(value = "active") boolean active,
+            @RequestParam(value = "active", required = false, defaultValue = "false") boolean active,
             @ApiParam(
                     value = "long starting date filter"
             )
-            @RequestParam(value = "startDate") long startDate,
+            @RequestParam(value = "startDate", required = false)
+                    String startDate,
             @ApiParam(
                     value = "long ending date filter"
             )
-            @RequestParam(value = "endDate") long endDate,
+            @RequestParam(value = "endDate", required = false)
+                    String endDate,
             @ApiParam(
                     value = "long duration of visit filter"
             )
-            @RequestParam(value = "duration") long duration){
-        return visitService.getVisits(active, startDate, endDate, duration);
+            @RequestParam(value = "duration", required = false, defaultValue = "-1")
+                    long duration){
+        return visitService.getVisits(active,
+                StringUtils.isNoneBlank(startDate) ?
+                LocalDateTime.parse((startDate)) : null,
+                StringUtils.isNoneBlank(endDate) ?
+                LocalDateTime.parse(endDate) : null,
+                duration
+        );
     }
 }

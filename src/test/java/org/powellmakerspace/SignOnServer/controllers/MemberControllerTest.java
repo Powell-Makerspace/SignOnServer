@@ -89,17 +89,6 @@ public class MemberControllerTest {
         memberController.getMembers("Bilbo Baggins", MembershipType.INDIVIDUAL);
     }
 
-    @Test
-    public void getMember_success(){
-
-        new Expectations(){{
-            memberService.getMember(1);
-        }};
-
-        memberController.getMember(1);
-    }
-
-
     @Test(expected = IOException.class)
     public void createMember_IOException(){
         Member testMember = new Member();
