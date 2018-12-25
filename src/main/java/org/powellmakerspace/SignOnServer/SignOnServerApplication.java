@@ -19,14 +19,24 @@ import java.time.LocalDateTime;
 @SpringBootApplication
 public class SignOnServerApplication {
 
-	private MembershipType[] membershipTypes = {MembershipType.INDIVIDUAL,
-			MembershipType.FAMILY, MembershipType.LIBRARY_PASS, MembershipType.NONMEMBER,
-			MembershipType.NORTHWEST_COLLEGE, MembershipType.PUNCH_PASS, MembershipType.VISTA
+	private MembershipType[] membershipTypes = {
+			MembershipType.INDIVIDUAL,
+			MembershipType.FAMILY,
+			MembershipType.LIBRARY_PASS,
+			MembershipType.NONMEMBER,
+			MembershipType.NORTHWEST_COLLEGE,
+			MembershipType.PUNCH_PASS,
+			MembershipType.VISTA
 	};
 
-	private VisitPurpose[] visitPurposes = {VisitPurpose.CLASS, VisitPurpose.TEACH,
-			VisitPurpose.VOLUNTEER, VisitPurpose.WORK_ON_PROJECT, VisitPurpose.COWORKSPACE,
-			VisitPurpose.COMMERCIAL_KITCHEN, VisitPurpose.VISTA
+	private VisitPurpose[] visitPurposes = {
+			VisitPurpose.CLASS,
+			VisitPurpose.TEACH,
+			VisitPurpose.VOLUNTEER,
+			VisitPurpose.WORK_ON_PROJECT,
+			VisitPurpose.COWORKSPACE,
+			VisitPurpose.COMMERCIAL_KITCHEN,
+			VisitPurpose.VISTA
 	};
 
 	private Logger logger = LoggerFactory.getLogger(SignOnServerApplication.class);
@@ -37,7 +47,7 @@ public class SignOnServerApplication {
 
 
 	@Bean
-	public CommandLineRunner seedDatabase(MemberService memberService, VisitService visitService){
+	public CommandLineRunner seedDatabase(MemberService memberService, VisitService visitService) {
 		return new CommandLineRunner(){
 			@Override
 			public void run(String... args) throws Exception {

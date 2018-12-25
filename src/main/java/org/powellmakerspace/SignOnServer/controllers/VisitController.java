@@ -89,14 +89,15 @@ public class VisitController {
     }
 
     @ApiOperation(
-            value = "getVisits",
-            notes = "Retrieves all visits in the repository",
+            value = "searchVisits",
+            notes = "Searches repository with the included parameters",
             response = Visit.class,
             responseContainer = "List"
     )
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public Iterable<Visit> getVisits(
-            @RequestParam(value = "active", required = false, defaultValue = "false") boolean active,
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public Iterable<Visit> searchVisits(
+            @RequestParam(value = "active", required = false, defaultValue = "false")
+                    boolean active,
             @ApiParam(
                     value = "long starting date filter"
             )
@@ -111,8 +112,9 @@ public class VisitController {
                     value = "long duration of visit filter"
             )
             @RequestParam(value = "duration", required = false, defaultValue = "-1")
-                    long duration){
-        return visitService.getVisits(active,
+                    long duration)
+    {
+        return visitService.searchVisits(active,
                 StringUtils.isNoneBlank(startDate) ?
                 LocalDateTime.parse((startDate)) : null,
                 StringUtils.isNoneBlank(endDate) ?
