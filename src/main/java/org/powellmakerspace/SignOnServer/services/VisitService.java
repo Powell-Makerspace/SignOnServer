@@ -72,7 +72,7 @@ public class VisitService {
         }
     }
 
-    public Iterable<Visit> getVisits(boolean active, LocalDateTime startDate, LocalDateTime endDate, long duration){
+    public Iterable<Visit> searchVisits(boolean active, LocalDateTime startDate, LocalDateTime endDate, long duration){
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 

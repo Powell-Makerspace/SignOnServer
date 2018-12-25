@@ -1,15 +1,14 @@
 package org.powellmakerspace.SignOnServer.controllers;
 
 import mockit.Expectations;
-import mockit.Mocked;
+import mockit.Injectable;
+import mockit.Tested;
 import mockit.integration.junit4.JMockit;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powellmakerspace.SignOnServer.models.Member;
 import org.powellmakerspace.SignOnServer.models.enums.MembershipType;
 import org.powellmakerspace.SignOnServer.services.MemberService;
-
 
 import java.io.IOException;
 
@@ -17,15 +16,11 @@ import java.io.IOException;
 @RunWith(JMockit.class)
 public class MemberControllerTest {
 
+    @Tested
     private MemberController memberController;
 
-    @Mocked
+    @Injectable
     private MemberService memberService;
-
-    @Before
-    public void init(){
-        memberController = new MemberController(memberService);
-    }
 
     @Test
     public void createMember_success(){
