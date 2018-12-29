@@ -42,7 +42,12 @@ public class Visit {
      * @param departureTime long timestamp for the departure time and date
      * @param visitPurpose Enum description of the purpose of visit
      */
-    public Visit(Member member, LocalDateTime arrivalTime, LocalDateTime departureTime, VisitPurpose visitPurpose){
+    public Visit(
+            Member member,
+            LocalDateTime arrivalTime,
+            LocalDateTime departureTime,
+            VisitPurpose visitPurpose
+    ){
         this.member = member;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;

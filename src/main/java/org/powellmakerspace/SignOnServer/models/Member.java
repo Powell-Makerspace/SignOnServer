@@ -1,7 +1,7 @@
 package org.powellmakerspace.SignOnServer.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.powellmakerspace.SignOnServer.models.enums.MembershipType;
+import org.powellmakerspace.SignOnServer.models.Membership.Membership;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,8 +13,12 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long memberId;
     private String memberName;
-    private MembershipType membershipType;
+
     private int punchPasses;
+
+    @ManyToOne
+    @JsonIgnore
+    private Membership membership;
 
     @OneToMany(mappedBy = "member")
     @JsonIgnore
@@ -31,12 +35,12 @@ public class Member {
     /**
      * Constructor for a member object
      * @param memberName String name for the member
-     * @param membershipType Enum name for the member's membership type
+     * @param membership Class that defines the membership of the member
      * @param punchPasses Integer number of remaining punch passes
      */
-    public Member(String memberName, MembershipType membershipType, int punchPasses) {
+    public Member(String memberName, Membership membership, int punchPasses) {
         this.memberName = memberName;
-        this.membershipType = membershipType;
+        this.membership = membership;
         this.punchPasses = punchPasses;
     }
 
@@ -54,7 +58,7 @@ public class Member {
         this.memberId = memberId;
     }
 
-    public String getMemberName() {
+    public String getName() {
         return memberName;
     }
 
@@ -62,12 +66,12 @@ public class Member {
         this.memberName = memberName;
     }
 
-    public MembershipType getMembershipType() {
-        return membershipType;
+    public Membership getMembership() {
+        return membership;
     }
 
-    public void setMembershipType(MembershipType membershipType) {
-        this.membershipType = membershipType;
+    public void setMembership(Membership membership) {
+        this.membership = membership;
     }
 
     public int getPunchPasses() {
@@ -78,7 +82,7 @@ public class Member {
         this.punchPasses = punchPasses;
     }
 
-    public List<Visit> getVisits() {
+    public List<Visit> getVisitList() {
         return visits;
     }
 

@@ -2,7 +2,6 @@ package org.powellmakerspace.SignOnServer.util;
 
 
 import com.github.javafaker.Faker;
-import org.powellmakerspace.SignOnServer.SignOnServerApplication;
 import org.powellmakerspace.SignOnServer.config.DbSeederProperties;
 import org.powellmakerspace.SignOnServer.exception.ResourceNotFoundException;
 import org.powellmakerspace.SignOnServer.models.Member;
@@ -90,8 +89,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         for (int i = 0; i < dbSeederProperties.getNumberOfMembers(); i++){
             Member member = new Member();
             member.setMemberName(faker.hobbit().character());
-            member.setMembershipType(membershipTypes[faker.random().nextInt(membershipTypes.length)]);
-            if (member.getMembershipType() == MembershipType.PUNCH_PASS){
+            member.setMembership(membershipTypes[faker.random().nextInt(membershipTypes.length)]);
+            if (member.getMembership() == MembershipType.PUNCH_PASS){
                 member.setPunchPasses(faker.random().nextInt(10));
             }
             else {
