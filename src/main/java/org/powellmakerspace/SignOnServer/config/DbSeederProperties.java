@@ -3,14 +3,40 @@ package org.powellmakerspace.SignOnServer.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configurations for the {@link org.powellmakerspace.SignOnServer.util.DatabaseSeeder} utility
+ *
+ * Values below can be specified in the application.properties file to specify a value for specific environments, for
+ * example, to disable the database seeder, the following can be added to the application.properties file
+ *
+ * <code>
+ *     seeder.enable=false
+ * </code>
+ *
+ * Values can also be overridden by environment vars at runtime, for example:
+ *
+ * <code>
+ *     export SEEDER_ENABLE=false
+ * </code>
+ *
+ */
 @ConfigurationProperties(prefix = "seeder")
 @Configuration
 public class DbSeederProperties {
 
+    /**
+     * Indicates whether or not the database seeder should run at startup
+     */
     private boolean enable;
 
+    /**
+     * Indicates number of random members to generate (has no effect if "enable" is false)
+     */
     private int numberOfMembers;
 
+    /**
+     * Indicates the number of random visits to generate (has no effect if "enable" is false)
+     */
     private int numberOfVisits;
 
 

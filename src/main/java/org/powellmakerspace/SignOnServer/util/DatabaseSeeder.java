@@ -19,9 +19,22 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/**
+ * Utility for seeding the database with random testing data upon application startup
+ *
+ * This utility provides random data in the database.  This helps facilitate local testing by showing what the
+ * application would look like and behave with large amounts of data present.
+ *
+ * The utility is configured through the {@link DbSeederProperties} class which is generally provided by spring. This
+ * properties class contains configurations such as whether or not to run the utility at startup, how many members to
+ * generate and how many visits to generate
+ */
 @Component
 @ConditionalOnProperty("seeder.enable")
 public class DatabaseSeeder implements CommandLineRunner {
+
+    private Logger logger = LoggerFactory.getLogger(SignOnServerApplication.class);
+
     private MembershipType[] membershipTypes = {
             MembershipType.INDIVIDUAL,
             MembershipType.FAMILY,
@@ -46,6 +59,13 @@ public class DatabaseSeeder implements CommandLineRunner {
     private MemberService memberService;
     private VisitService visitService;
 
+    /**
+     * Create a new instance of the DatabaseSeeder Utility
+     *
+     * @param dbSeederProperties Properties configuration used when running the database seeder
+     * @param memberService The member service to use when adding new members
+     * @param visitService The visit service to use when adding new visits
+     */
     public DatabaseSeeder(
             DbSeederProperties dbSeederProperties,
             MemberService memberService, VisitService visitService
@@ -54,8 +74,6 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.memberService = memberService;
         this.visitService = visitService;
     }
-
-    private Logger logger = LoggerFactory.getLogger(SignOnServerApplication.class);
 
     @Override
     public void run(String... args) throws ResourceNotFoundException {
@@ -111,5 +129,4 @@ public class DatabaseSeeder implements CommandLineRunner {
                     (System.currentTimeMillis() - systemTime)/1000.0);
         }
     }
-
 }
