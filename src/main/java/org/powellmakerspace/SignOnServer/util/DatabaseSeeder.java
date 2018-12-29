@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
 @ConditionalOnProperty("seeder.enable")
 public class DatabaseSeeder implements CommandLineRunner {
 
-    private Logger logger = LoggerFactory.getLogger(SignOnServerApplication.class);
+    private Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
 
     private MembershipType[] membershipTypes = {
             MembershipType.INDIVIDUAL,
