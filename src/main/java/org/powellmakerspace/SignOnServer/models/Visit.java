@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 public class Visit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "visit_seq")
+    @SequenceGenerator(name="visit_seq", sequenceName = "visit_visit_id", allocationSize = 1)
     private long visitId;
 
     @ManyToOne
