@@ -3,12 +3,14 @@ package org.powellmakerspace.SignOnServer.models.Membership;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.powellmakerspace.SignOnServer.models.Member;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-public class Individual implements Membership{
+public class Family implements Membership {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +19,6 @@ public class Individual implements Membership{
     private LocalDate startDate;
     private LocalDate endDate;
 
-    // @TODO Check with Nick as to whether this should be defined as OneToOne
     @OneToMany(mappedBy = "membership")
     @JsonIgnore
     private List<Member> memberList;
@@ -42,8 +43,8 @@ public class Individual implements Membership{
 
         if((startDate.isEqual(LocalDate.now()) ||
                 startDate.isBefore(LocalDate.now())) &&
-                        (endDate.isEqual(LocalDate.now()) ||
-                                endDate.isAfter(LocalDate.now()))){
+                (endDate.isEqual(LocalDate.now()) ||
+                        endDate.isAfter(LocalDate.now()))){
             return true;
         }
         else{
@@ -76,5 +77,7 @@ public class Individual implements Membership{
         return memberList;
     }
 
-
+    public void addMemberToList(Member member){
+        memberList.add(member);
+    }
 }
