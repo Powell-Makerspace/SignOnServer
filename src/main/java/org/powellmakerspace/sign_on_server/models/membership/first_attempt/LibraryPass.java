@@ -1,0 +1,89 @@
+package org.powellmakerspace.sign_on_server.models.membership.first_attempt;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.powellmakerspace.sign_on_server.models.Member;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.time.LocalDate;
+import java.util.List;
+
+public class LibraryPass implements Membership {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long membershipId;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    @OneToMany(mappedBy = "membership")
+    @JsonIgnore
+    private List<Member> memberList;
+
+    /**
+     * Default Constructor
+     */
+    public LibraryPass(){}
+
+    /**
+     * Constructor which accepts the membership time frame.
+     * @param startDate LocalDate marking the beginning of the membership.
+     * @param endDate LocalDate marking the ending of the membership.
+     */
+    public LibraryPass(LocalDate startDate, LocalDate endDate){
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+
+
+    @Override
+    public boolean isActive() {
+        if((startDate.isEqual(LocalDate.now()) ||
+                startDate.isBefore(LocalDate.now())) &&
+                (endDate.isEqual(LocalDate.now()) ||
+                        endDate.isAfter(LocalDate.now()))){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    @Override
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    @Override
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    @Override
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    @Override
+    public List<Member> getMemberList() {
+        return memberList;
+    }
+
+    /**
+     * Method to update the endDate of a membership as defined by the membership type.
+     * Adds two weeks to the endDate of a LibraryPass membership.
+     * @param updateDate LocalDate when the update is to occur.
+     */
+    public void updateTimeframe(LocalDate updateDate){
+        this.endDate = updateDate.plusWeeks(2);
+    }
+}
