@@ -6,7 +6,7 @@ import org.powellmakerspace.sign_on_server.config.DbSeederProperties;
 import org.powellmakerspace.sign_on_server.exception.ResourceNotFoundException;
 import org.powellmakerspace.sign_on_server.models.Member;
 import org.powellmakerspace.sign_on_server.models.Visit;
-import org.powellmakerspace.sign_on_server.models.enums.MembershipType;
+import org.powellmakerspace.sign_on_server.models.enums.RentalType;
 import org.powellmakerspace.sign_on_server.models.enums.VisitPurpose;
 import org.powellmakerspace.sign_on_server.services.MemberService;
 import org.powellmakerspace.sign_on_server.services.VisitService;
@@ -34,14 +34,10 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
 
-    private MembershipType[] membershipTypes = {
-            MembershipType.INDIVIDUAL,
-            MembershipType.FAMILY,
-            MembershipType.LIBRARY_PASS,
-            MembershipType.NONMEMBER,
-            MembershipType.NORTHWEST_COLLEGE,
-            MembershipType.PUNCH_PASS,
-            MembershipType.VISTA
+    private RentalType[] rentalTypes = {
+            RentalType.COWORKSPACE,
+            RentalType.KITCHEN,
+            RentalType.ROOM,
     };
 
     private VisitPurpose[] visitPurposes = {
@@ -85,20 +81,21 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         Faker faker = new Faker();
 
-        // Create Dummy Data for Members
-        for (int i = 0; i < dbSeederProperties.getNumberOfMembers(); i++){
-            Member member = new Member();
-            member.setMemberName(faker.hobbit().character());
-            member.setAccessMechanism(membershipTypes[faker.random().nextInt(membershipTypes.length)]);
-            if (member.getAccessMechanism() == MembershipType.PUNCH_PASS){
-                member.setPunchPasses(faker.random().nextInt(10));
-            }
-            else {
-                member.setPunchPasses(-1);
-            }
-
-            memberService.createMember(member);
-        }
+        // TODO: 2019-01-05 Fix the Dummy Data with the new AccessMachanism structure in place.
+//        // Create Dummy Data for Members
+//        for (int i = 0; i < dbSeederProperties.getNumberOfMembers(); i++){
+//            Member member = new Member();
+//            member.setMemberName(faker.hobbit().character());
+//            member.setAccessMechanism(rentalTypes[faker.random().nextInt(rentalTypes.length)]);
+//            if (member.getAccessMechanism() == RentalType.PUNCH_PASS){
+//                member.setPunchPasses(faker.random().nextInt(10));
+//            }
+//            else {
+//                member.setPunchPasses(-1);
+//            }
+//
+//            memberService.createMember(member);
+//        }
 
         // Create Dummy Data for Visits
         for (int i = 0; i < dbSeederProperties.getNumberOfVisits(); i++){

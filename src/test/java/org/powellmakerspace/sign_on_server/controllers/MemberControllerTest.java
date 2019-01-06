@@ -7,7 +7,7 @@ import mockit.integration.junit4.JMockit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powellmakerspace.sign_on_server.models.Member;
-import org.powellmakerspace.sign_on_server.models.enums.MembershipType;
+import org.powellmakerspace.sign_on_server.models.enums.RentalType;
 import org.powellmakerspace.sign_on_server.services.MemberService;
 
 import java.io.IOException;
@@ -68,20 +68,20 @@ public class MemberControllerTest {
     public void getMembersNullType_success(){
 
         new Expectations(){{
-            memberService.getMembers(null, MembershipType.INDIVIDUAL);
+            memberService.getMembers(null, RentalType.INDIVIDUAL);
         }};
 
-        memberController.getMembers(null, MembershipType.INDIVIDUAL);
+        memberController.getMembers(null, RentalType.INDIVIDUAL);
     }
 
     @Test
     public void getMembersNameType_success(){
 
         new Expectations(){{
-           memberService.getMembers("Bilbo Baggins", MembershipType.INDIVIDUAL);
+           memberService.getMembers("Bilbo Baggins", RentalType.INDIVIDUAL);
         }};
 
-        memberController.getMembers("Bilbo Baggins", MembershipType.INDIVIDUAL);
+        memberController.getMembers("Bilbo Baggins", RentalType.INDIVIDUAL);
     }
 
     @Test(expected = IOException.class)

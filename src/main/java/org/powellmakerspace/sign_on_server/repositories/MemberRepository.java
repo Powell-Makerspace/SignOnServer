@@ -1,7 +1,6 @@
 package org.powellmakerspace.sign_on_server.repositories;
 
 import org.powellmakerspace.sign_on_server.models.Member;
-import org.powellmakerspace.sign_on_server.models.enums.MembershipType;
 import org.powellmakerspace.sign_on_server.models.membership.second_attempt.AccessMechanism;
 import org.springframework.data.repository.CrudRepository;
 

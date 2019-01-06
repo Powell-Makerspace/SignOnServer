@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.powellmakerspace.sign_on_server.exception.ResourceNotFoundException;
 import org.powellmakerspace.sign_on_server.models.Member;
-import org.powellmakerspace.sign_on_server.models.enums.MembershipType;
 import org.powellmakerspace.sign_on_server.models.membership.second_attempt.AccessMechanism;
 import org.powellmakerspace.sign_on_server.services.MemberService;
 import org.springframework.web.bind.annotation.*;
