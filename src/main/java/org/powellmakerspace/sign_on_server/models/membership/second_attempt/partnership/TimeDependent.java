@@ -2,13 +2,16 @@ package org.powellmakerspace.sign_on_server.models.membership.second_attempt.par
 
 import org.powellmakerspace.sign_on_server.models.Member;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class TimeDependent implements PartnerMember {
 
-    @OneToOne()
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long timeDependentId;
+    @OneToOne(mappedBy = "accessMechanism")
     private Member member;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -25,6 +28,10 @@ public class TimeDependent implements PartnerMember {
         this.partnership = partnership;
     }
 
+    public long getTimeDependentId(){
+        return timeDependentId;
+    }
+
     public Member getMember(){
         return member;
     }
@@ -39,6 +46,10 @@ public class TimeDependent implements PartnerMember {
 
     public Partnership getPartnership(){
         return partnership;
+    }
+
+    public void setTimeDependentId(long timeDependentId){
+        this.timeDependentId = timeDependentId;
     }
 
     public void setMember(Member member){
@@ -64,4 +75,17 @@ public class TimeDependent implements PartnerMember {
     }
 
 
+    /**
+     * This method specifically checks that both the Partnership is active,
+     * and this particular member's time has not yet expired.
+     * @return boolean value of whether this individual can visit.
+     */
+    @Override
+    public boolean canVisit() {
+        LocalDate nowDate = LocalDate.now();
+
+        return (startDate.isBefore(nowDate) || startDate.isEqual(nowDate)) &&
+                (endDate.isAfter(nowDate) || endDate.isEqual(nowDate)) &&
+                partnership.canVisit();
+    }
 }

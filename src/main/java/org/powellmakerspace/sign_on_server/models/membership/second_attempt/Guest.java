@@ -2,11 +2,9 @@ package org.powellmakerspace.sign_on_server.models.membership.second_attempt;
 
 import org.powellmakerspace.sign_on_server.models.Member;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
 public class Guest implements AccessMechanism {
 
     @Id

@@ -1,4 +1,6 @@
 package org.powellmakerspace.sign_on_server.models.membership.second_attempt.partnership;
 
-public interface PartnerMember {
+import org.powellmakerspace.sign_on_server.models.membership.second_attempt.AccessMechanism;
+
+public interface PartnerMember extends AccessMechanism {
 }

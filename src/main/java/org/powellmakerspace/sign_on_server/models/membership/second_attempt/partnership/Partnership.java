@@ -2,13 +2,11 @@ package org.powellmakerspace.sign_on_server.models.membership.second_attempt.par
 
 import org.powellmakerspace.sign_on_server.models.membership.second_attempt.AccessMechanism;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class Partnership implements AccessMechanism {
 
     @Id

@@ -2,13 +2,11 @@ package org.powellmakerspace.sign_on_server.models.membership.second_attempt.mem
 
 import org.powellmakerspace.sign_on_server.models.Member;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class Family implements Membership {
 
     @Id
@@ -16,14 +14,14 @@ public class Family implements Membership {
     private long membershipId;
     private String name;
     @OneToMany(mappedBy = "familyMembership")
-    private List<Member> familyMemberList;
+    private List<FamilyMember> familyMemberList;
     private LocalDate startDate;
     private LocalDate endDate;
 
     public Family(){}
 
 
-    public Family(String name, List<Member> familyMemberList, LocalDate startDate, LocalDate endDate){
+    public Family(String name, List<FamilyMember> familyMemberList, LocalDate startDate, LocalDate endDate){
         this.name = name;
         this.familyMemberList = familyMemberList;
         this.startDate = startDate;
@@ -39,7 +37,7 @@ public class Family implements Membership {
         return name;
     }
 
-    public List<Member> getFamilyMemberList(){
+    public List<FamilyMember> getFamilyMemberList(){
         return familyMemberList;
     }
 
@@ -61,7 +59,7 @@ public class Family implements Membership {
         this.name = name;
     }
 
-    public void setFamilyMemberList(List<Member> familyMemberList){
+    public void setFamilyMemberList(List<FamilyMember> familyMemberList){
         this.familyMemberList = familyMemberList;
     }
 

@@ -14,7 +14,7 @@ public class Member {
     private long memberId;
     private String memberName;
 
-    @OneToOne
+    @OneToOne(mappedBy = "member")
     @JsonIgnore
     private AccessMechanism accessMechanism;
 

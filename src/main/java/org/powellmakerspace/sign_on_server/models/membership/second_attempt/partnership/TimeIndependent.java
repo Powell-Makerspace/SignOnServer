@@ -2,12 +2,15 @@ package org.powellmakerspace.sign_on_server.models.membership.second_attempt.par
 
 import org.powellmakerspace.sign_on_server.models.Member;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
 public class TimeIndependent implements PartnerMember {
 
-    @OneToOne
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long timeIndependentId;
+    @OneToOne(mappedBy = "accessMechanism")
     private Member member;
     @ManyToOne
     private Partnership partnership;
@@ -20,6 +23,10 @@ public class TimeIndependent implements PartnerMember {
         this.partnership = partnership;
     }
 
+    public long getTimeIndependentId(){
+        return timeIndependentId;
+    }
+
     public Member getMember(){
         return member;
     }
@@ -28,11 +35,20 @@ public class TimeIndependent implements PartnerMember {
         return partnership;
     }
 
+    public void setTimeIndependentId(long timeIndependentId){
+        this.timeIndependentId = timeIndependentId;
+    }
+
     public void setMember(Member member){
         this.member = member;
     }
 
     public void setPartnership(Partnership partnership){
         this.partnership = partnership;
+    }
+
+    @Override
+    public boolean canVisit() {
+        return partnership.canVisit();
     }
 }

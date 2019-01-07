@@ -2,6 +2,7 @@ package org.powellmakerspace.sign_on_server.models.membership.second_attempt.mem
 
 import org.powellmakerspace.sign_on_server.models.membership.second_attempt.AccessMechanism;
 
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
 public interface Membership extends AccessMechanism {
