@@ -86,8 +86,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         for (int i = 0; i < dbSeederProperties.getNumberOfMembers(); i++){
             Member member = new Member();
             member.setMemberName(faker.hobbit().character());
-//            member.setAccessMechanism(rentalTypes[faker.random().nextInt(rentalTypes.length)]);
-//            if (member.getAccessMechanism() == RentalType.PUNCH_PASS){
+//            member.setAccessMechanismId(rentalTypes[faker.random().nextInt(rentalTypes.length)]);
+//            if (member.getAccessMechanismId() == RentalType.PUNCH_PASS){
 //                member.setPunchPasses(faker.random().nextInt(10));
 //            }
 //            else {

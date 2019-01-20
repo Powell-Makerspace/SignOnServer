@@ -1,4 +1,4 @@
-package org.powellmakerspace.sign_on_server.models.membership.second_attempt.partnership;
+package org.powellmakerspace.sign_on_server.models.access_mechanism.partnership;
 
 import org.powellmakerspace.sign_on_server.models.Member;
 

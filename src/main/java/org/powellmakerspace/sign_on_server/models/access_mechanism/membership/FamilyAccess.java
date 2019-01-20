@@ -1,28 +1,26 @@
-package org.powellmakerspace.sign_on_server.models.membership.second_attempt.membership;
-
-import org.powellmakerspace.sign_on_server.models.Member;
+package org.powellmakerspace.sign_on_server.models.access_mechanism.membership;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-//@Entity
-public class Family {
+@Entity
+public class FamilyAccess {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long membershipId;
     private String name;
-//    @OneToMany(mappedBy = "familyMembership")
-    private List<FamilyMember> familyMemberList;
+    @OneToMany(mappedBy = "familyAccess")
+    private List<FamilyMembership> familyMembershipList;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Family(){}
+    public FamilyAccess(){}
 
-    public Family(String name, List<FamilyMember> familyMemberList, LocalDate startDate, LocalDate endDate){
+    public FamilyAccess(String name, List<FamilyMembership> familyMembershipList, LocalDate startDate, LocalDate endDate){
         this.name = name;
-        this.familyMemberList = familyMemberList;
+        this.familyMembershipList = familyMembershipList;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -36,8 +34,8 @@ public class Family {
         return name;
     }
 
-    public List<FamilyMember> getFamilyMemberList(){
-        return familyMemberList;
+    public List<FamilyMembership> getFamilyMembershipList(){
+        return familyMembershipList;
     }
 
     public LocalDate getStartDate() {
@@ -56,8 +54,8 @@ public class Family {
         this.name = name;
     }
 
-    public void setFamilyMemberList(List<FamilyMember> familyMemberList){
-        this.familyMemberList = familyMemberList;
+    public void setFamilyMembershipList(List<FamilyMembership> familyMembershipList){
+        this.familyMembershipList = familyMembershipList;
     }
 
     public void setStartDate(LocalDate startDate){

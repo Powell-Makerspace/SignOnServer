@@ -1,4 +1,4 @@
-package org.powellmakerspace.sign_on_server.models.membership.second_attempt;
+package org.powellmakerspace.sign_on_server.models.access_mechanism;
 
 import org.powellmakerspace.sign_on_server.models.Member;
 
@@ -9,17 +9,17 @@ public abstract class AccessMechanism {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long guestId;
+    private long accessMechanismId;
 
     @OneToOne
     private Member member;
 
-    public final long getGuestId() {
-        return guestId;
+    public final long getAccessMechanismId() {
+        return accessMechanismId;
     }
 
-    public final void setGuestId(long guestId) {
-        this.guestId = guestId;
+    public final void setAccessMechanismId(long accessMechanismId) {
+        this.accessMechanismId = accessMechanismId;
     }
 
     public final Member getMember() {

@@ -1,7 +1,7 @@
 package org.powellmakerspace.sign_on_server.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.powellmakerspace.sign_on_server.models.membership.second_attempt.AccessMechanism;
+import org.powellmakerspace.sign_on_server.models.access_mechanism.AccessMechanism;
 
 import javax.persistence.*;
 import java.util.List;

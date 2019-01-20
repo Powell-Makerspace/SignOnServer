@@ -1,6 +1,6 @@
-package org.powellmakerspace.sign_on_server.models.membership.second_attempt.membership;
+package org.powellmakerspace.sign_on_server.models.access_mechanism.membership;
 
-import org.powellmakerspace.sign_on_server.models.membership.second_attempt.AccessMechanism;
+import org.powellmakerspace.sign_on_server.models.access_mechanism.AccessMechanism;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;

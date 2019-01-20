@@ -2,7 +2,7 @@ package org.powellmakerspace.sign_on_server.services;
 
 import org.powellmakerspace.sign_on_server.exception.ResourceNotFoundException;
 import org.powellmakerspace.sign_on_server.models.Member;
-import org.powellmakerspace.sign_on_server.models.membership.second_attempt.AccessMechanism;
+import org.powellmakerspace.sign_on_server.models.access_mechanism.AccessMechanism;
 import org.powellmakerspace.sign_on_server.repositories.MemberRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

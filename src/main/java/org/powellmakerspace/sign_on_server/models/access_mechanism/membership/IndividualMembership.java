@@ -1,23 +1,23 @@
-package org.powellmakerspace.sign_on_server.models.membership.second_attempt.membership;
+package org.powellmakerspace.sign_on_server.models.access_mechanism.membership;
 
 import org.powellmakerspace.sign_on_server.models.Member;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
 @Entity
-public class Individual extends Membership {
+public class IndividualMembership extends Membership {
 
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Individual(){}
+    public IndividualMembership(){}
 
 
-    public Individual(LocalDate startDate, LocalDate endDate, Member member){
+    public IndividualMembership(LocalDate startDate, LocalDate endDate, Member member){
         this.startDate = startDate;
         this.endDate = endDate;
-        setMember(member);
+        setMember(member); /** This calls the method inherited from Access Mechanism **/
     }
 
     @Override
