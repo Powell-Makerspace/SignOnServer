@@ -5,22 +5,13 @@ import org.powellmakerspace.sign_on_server.models.Member;
 import javax.persistence.*;
 
 @Entity
-public class Guest implements AccessMechanism {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long guestId;
-    @OneToOne
-    private Member member;
-
+public class Guest extends AccessMechanism {
 
     public Guest(){}
 
-
     public Guest(Member member){
-        this.member = member;
+        setMember(member);
     }
-
 
     @Override
     public boolean canVisit() {

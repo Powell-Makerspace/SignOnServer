@@ -6,16 +6,10 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Individual implements Membership{
+public class Individual extends Membership {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long membershipId;
     private LocalDate startDate;
     private LocalDate endDate;
-    @OneToOne(mappedBy = "accessMechanism")
-    private Member member;
-
 
     public Individual(){}
 
@@ -23,13 +17,7 @@ public class Individual implements Membership{
     public Individual(LocalDate startDate, LocalDate endDate, Member member){
         this.startDate = startDate;
         this.endDate = endDate;
-        this.member = member;
-    }
-
-
-
-    public long getMembershipId(){
-        return membershipId;
+        setMember(member);
     }
 
     @Override
@@ -42,24 +30,12 @@ public class Individual implements Membership{
         return endDate;
     }
 
-    public Member getMember(){
-        return member;
-    }
-
-    public void setMembershipId(long membershipId){
-        this.membershipId = membershipId;
-    }
-
     public void setStartDate(LocalDate startDate){
         this.startDate = startDate;
     }
 
     public void setEndDate(LocalDate endDate){
         this.endDate = endDate;
-    }
-
-    public void setMember(Member member){
-        this.member = member;
     }
 
     @Override

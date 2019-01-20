@@ -68,20 +68,20 @@ public class MemberControllerTest {
     public void getMembersNullType_success(){
 
         new Expectations(){{
-            memberService.getMembers(null, RentalType.INDIVIDUAL);
+            memberService.getMembers(null, null);
         }};
 
-        memberController.getMembers(null, RentalType.INDIVIDUAL);
+        memberController.getMembers(null, null);
     }
 
     @Test
     public void getMembersNameType_success(){
 
         new Expectations(){{
-           memberService.getMembers("Bilbo Baggins", RentalType.INDIVIDUAL);
+           memberService.getMembers("Bilbo Baggins", null);
         }};
 
-        memberController.getMembers("Bilbo Baggins", RentalType.INDIVIDUAL);
+        memberController.getMembers("Bilbo Baggins", null);
     }
 
     @Test(expected = IOException.class)

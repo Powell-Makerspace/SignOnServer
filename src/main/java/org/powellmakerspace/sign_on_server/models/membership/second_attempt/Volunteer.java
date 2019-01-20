@@ -6,13 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Volunteer implements AccessMechanism {
+public class Volunteer extends AccessMechanism {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long volunteerId;
-    @OneToOne
-    private Member member;
     private LocalDate startDate;
     private LocalDate endDate;
 
@@ -21,19 +16,9 @@ public class Volunteer implements AccessMechanism {
 
 
     public Volunteer(Member member, LocalDate startDate, LocalDate endDate){
-        this.member = member;
+        setMember(member);
         this.startDate = startDate;
         this.endDate = endDate;
-    }
-
-
-
-    public long getVolunteerId(){
-        return volunteerId;
-    }
-
-    public Member getMember(){
-        return member;
     }
 
     public LocalDate getStartDate(){
@@ -43,15 +28,7 @@ public class Volunteer implements AccessMechanism {
     public LocalDate getEndDate(){
         return endDate;
     }
-
-    public void setVolunteerId(long volunteerId){
-        this.volunteerId = volunteerId;
-    }
-
-    public void setMember(Member member){
-        this.member = member;
-    }
-
+    
     public void setStartDate(LocalDate startDate){
         this.startDate = startDate;
     }

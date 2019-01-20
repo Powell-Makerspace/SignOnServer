@@ -4,32 +4,27 @@ import org.powellmakerspace.sign_on_server.models.membership.second_attempt.Acce
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
-@Entity
-public class Partnership implements AccessMechanism {
+//@Entity
+public class Partnership {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long partnershipId;
     private LocalDate startDate;
     private LocalDate endDate;
     private String organizationName;
-    @OneToMany(mappedBy = "partnership")
-    private List<PartnerMember> memberList;
+
+//    @OneToMany(mappedBy = "partnership")
+//    private List<PartnerMember> memberList;
 
 
     public Partnership(){}
 
 
-    public Partnership(LocalDate startDate, LocalDate endDate, String organizationName, List<PartnerMember> memberList){
+    public Partnership(LocalDate startDate, LocalDate endDate, String organizationName) { // , List<PartnerMember> memberList){
         this.startDate = startDate;
         this.endDate = endDate;
         this.organizationName = organizationName;
-        this.memberList = memberList;
+//        this.memberList = memberList;
     }
-
-
 
     public LocalDate getStartDate() {
         return startDate;
@@ -43,13 +38,9 @@ public class Partnership implements AccessMechanism {
         return organizationName;
     }
 
-    public List<PartnerMember> getMemberList(){
-        return memberList;
-    }
-
-    public long getPartnershipId(){
-        return partnershipId;
-    }
+//    public List<PartnerMember> getMemberList(){
+//        return memberList;
+//    }
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
@@ -63,18 +54,14 @@ public class Partnership implements AccessMechanism {
         this.organizationName = organizationName;
     }
 
-    public void setMemberList(List<PartnerMember> memberList){
-        this.memberList = memberList;
-    }
+//    public void setMemberList(List<PartnerMember> memberList){
+//        this.memberList = memberList;
+//    }
 
-    public void setPartnershipId(long partnershipId){
-        this.partnershipId = partnershipId;
-    }
-
-    @Override
-    public boolean canVisit() {
-        LocalDate nowDate = LocalDate.now();
-        return (startDate.isBefore(nowDate) || startDate.isEqual(nowDate)) &&
-                (endDate.isAfter(nowDate) || endDate.isEqual(nowDate));
-    }
+//    @Override
+//    public boolean canVisit() {
+//        LocalDate nowDate = LocalDate.now();
+//        return (startDate.isBefore(nowDate) || startDate.isEqual(nowDate)) &&
+//                (endDate.isAfter(nowDate) || endDate.isEqual(nowDate));
+//    }
 }

@@ -6,52 +6,31 @@ import org.powellmakerspace.sign_on_server.models.membership.second_attempt.Acce
 import javax.persistence.*;
 
 @Entity
-public class FamilyMember implements AccessMechanism {
+public class FamilyMember extends AccessMechanism {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long familyMemberId;
-    @OneToOne(mappedBy = "accessMechanism")
-    private Member member;
-    @ManyToOne
-    private Family familyMembership;
+//    @ManyToOne
+//    private Family familyMembership;
 
 
     public FamilyMember(){}
 
 
     public FamilyMember(Member member, Family familyMembership){
-        this.member = member;
-        this.familyMembership = familyMembership;
+        setMember(member);
+//        this.familyMembership = familyMembership;
     }
 
-
-    public long getFamilyMemberId(){
-        return familyMemberId;
-    }
-
-    public Member getMember(){
-        return member;
-    }
-
-    public Family getFamilyMembership() {
-        return familyMembership;
-    }
-
-    public void setFamilyMemberId(long familyMemberId){
-        this.familyMemberId = familyMemberId;
-    }
-
-    public void setMember(Member member){
-        this.member = member;
-    }
-
-    public void setFamilyMembership(Family familyMembership){
-        this.familyMembership = familyMembership;
-    }
+//    public Family getFamilyMembership() {
+//        return familyMembership;
+//    }
+//
+//    public void setFamilyMembership(Family familyMembership){
+//        this.familyMembership = familyMembership;
+//    }
 
     @Override
     public boolean canVisit() {
-        return familyMembership.canVisit();
+        return true;
+//        return familyMembership.canVisit();
     }
 }

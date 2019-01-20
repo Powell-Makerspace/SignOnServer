@@ -82,10 +82,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         Faker faker = new Faker();
 
         // TODO: 2019-01-05 Fix the Dummy Data with the new AccessMachanism structure in place.
-//        // Create Dummy Data for Members
-//        for (int i = 0; i < dbSeederProperties.getNumberOfMembers(); i++){
-//            Member member = new Member();
-//            member.setMemberName(faker.hobbit().character());
+        // Create Dummy Data for Members
+        for (int i = 0; i < dbSeederProperties.getNumberOfMembers(); i++){
+            Member member = new Member();
+            member.setMemberName(faker.hobbit().character());
 //            member.setAccessMechanism(rentalTypes[faker.random().nextInt(rentalTypes.length)]);
 //            if (member.getAccessMechanism() == RentalType.PUNCH_PASS){
 //                member.setPunchPasses(faker.random().nextInt(10));
@@ -93,14 +93,21 @@ public class DatabaseSeeder implements CommandLineRunner {
 //            else {
 //                member.setPunchPasses(-1);
 //            }
-//
-//            memberService.createMember(member);
-//        }
+
+            memberService.createMember(member);
+        }
 
         // Create Dummy Data for Visits
         for (int i = 0; i < dbSeederProperties.getNumberOfVisits(); i++){
             Visit visit = new Visit();
-            visit.setMember(memberService.getMember(faker.random().nextInt(1, dbSeederProperties.getNumberOfMembers())));
+            while (true) {
+                try {
+                    visit.setMember(memberService.getMember(faker.random().nextInt(1, dbSeederProperties.getNumberOfMembers())));
+                    break;
+                } catch (ResourceNotFoundException e) {
+
+                }
+            }
             // Random Time up to Jan. 1, 2019
             LocalDateTime randomDateTime = LocalDateTime.of(
                     faker.random().nextInt(2000,2020),

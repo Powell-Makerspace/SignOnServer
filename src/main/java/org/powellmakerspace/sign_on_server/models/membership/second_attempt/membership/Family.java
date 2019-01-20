@@ -6,20 +6,19 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-public class Family implements Membership {
+//@Entity
+public class Family {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private long membershipId;
     private String name;
-    @OneToMany(mappedBy = "familyMembership")
+//    @OneToMany(mappedBy = "familyMembership")
     private List<FamilyMember> familyMemberList;
     private LocalDate startDate;
     private LocalDate endDate;
 
     public Family(){}
-
 
     public Family(String name, List<FamilyMember> familyMemberList, LocalDate startDate, LocalDate endDate){
         this.name = name;
@@ -41,12 +40,10 @@ public class Family implements Membership {
         return familyMemberList;
     }
 
-    @Override
     public LocalDate getStartDate() {
         return startDate;
     }
 
-    @Override
     public LocalDate getEndDate() {
         return endDate;
     }
@@ -71,7 +68,6 @@ public class Family implements Membership {
         this.endDate = endDate;
     }
 
-    @Override
     public boolean canVisit() {
         LocalDate nowDate = LocalDate.now();
         return (startDate.isBefore(nowDate) || startDate.isEqual(nowDate)) &&

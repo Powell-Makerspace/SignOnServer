@@ -14,9 +14,9 @@ public interface MemberRepository extends CrudRepository<Member, Long> {
 
     Optional<Member> findByMemberName(String memberName);
 
-    Iterable<Member> findMembersByMemberNameLike(String filter);
-
-    Iterable<Member> findMembersByMembershipType(AccessMechanism membershipType);
-
-    Iterable<Member> findMembersByMemberNameLikeAndMembershipType(String memberName, AccessMechanism membershipType);
+//    Iterable<Member> findMembersByMemberNameLike(String filter);
+//
+//    Iterable<Member> findMembersByMembershipType(AccessMechanism membershipType);
+//
+//    Iterable<Member> findMembersByMemberNameLikeAndMembershipType(String memberName, AccessMechanism membershipType);
 }

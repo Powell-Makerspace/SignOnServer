@@ -77,14 +77,15 @@ public class MemberService {
         if (memberName == null && membershipType == null){
             return memberRepository.findAll();
         }
-        else if (memberName != null && membershipType == null) {
-            return memberRepository.findMembersByMemberNameLike(memberName);
-        }
-        else if (memberName == null /* && membershipType != null */) { // Comment not logically needed for functionality
-            return memberRepository.findMembersByMembershipType(membershipType);
-        }
-        else {
-            return memberRepository.findMembersByMemberNameLikeAndMembershipType(memberName, membershipType);
-        }
+        return null;
+//        else if (memberName != null && membershipType == null) {
+//            return memberRepository.findMembersByMemberNameLike(memberName);
+//        }
+//        else if (memberName == null /* && membershipType != null */) { // Comment not logically needed for functionality
+//            return memberRepository.findMembersByMembershipType(membershipType);
+//        }
+//        else {
+//            return memberRepository.findMembersByMemberNameLikeAndMembershipType(memberName, membershipType);
+//        }
     }
 }

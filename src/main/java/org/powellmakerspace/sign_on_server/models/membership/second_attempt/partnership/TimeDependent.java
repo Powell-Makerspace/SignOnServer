@@ -6,34 +6,21 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class TimeDependent implements PartnerMember {
+public class TimeDependent extends PartnerMember {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long timeDependentId;
-    @OneToOne(mappedBy = "accessMechanism")
-    private Member member;
     private LocalDate startDate;
     private LocalDate endDate;
-    @ManyToOne
-    private Partnership partnership;
+//    @ManyToOne
+//    private Partnership partnership;
 
 
     public TimeDependent(){}
 
     public TimeDependent(Member member, LocalDate startDate, LocalDate endDate, Partnership partnership){
-        this.member = member;
+        setMember(member);
         this.startDate = startDate;
         this.endDate = endDate;
-        this.partnership = partnership;
-    }
-
-    public long getTimeDependentId(){
-        return timeDependentId;
-    }
-
-    public Member getMember(){
-        return member;
+//        this.partnership = partnership;
     }
 
     public LocalDate getStartDate(){
@@ -44,17 +31,9 @@ public class TimeDependent implements PartnerMember {
         return endDate;
     }
 
-    public Partnership getPartnership(){
-        return partnership;
-    }
-
-    public void setTimeDependentId(long timeDependentId){
-        this.timeDependentId = timeDependentId;
-    }
-
-    public void setMember(Member member){
-        this.member = member;
-    }
+//    public Partnership getPartnership(){
+//        return partnership;
+//    }
 
     public void setStartDate(LocalDate startDate){
         this.startDate = startDate;
@@ -64,9 +43,9 @@ public class TimeDependent implements PartnerMember {
         this.endDate = endDate;
     }
 
-    public void setPartnership(Partnership partnership){
-        this.partnership = partnership;
-    }
+//    public void setPartnership(Partnership partnership){
+//        this.partnership = partnership;
+//    }
 
     public boolean isActive(){
         LocalDate nowDate = LocalDate.now();
@@ -82,10 +61,11 @@ public class TimeDependent implements PartnerMember {
      */
     @Override
     public boolean canVisit() {
-        LocalDate nowDate = LocalDate.now();
-
-        return (startDate.isBefore(nowDate) || startDate.isEqual(nowDate)) &&
-                (endDate.isAfter(nowDate) || endDate.isEqual(nowDate)) &&
-                partnership.canVisit();
+        return true;
+//        LocalDate nowDate = LocalDate.now();
+//
+//        return (startDate.isBefore(nowDate) || startDate.isEqual(nowDate)) &&
+//                (endDate.isAfter(nowDate) || endDate.isEqual(nowDate)) &&
+//                partnership.canVisit();
     }
 }

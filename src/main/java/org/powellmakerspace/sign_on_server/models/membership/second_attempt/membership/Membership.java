@@ -5,8 +5,10 @@ import org.powellmakerspace.sign_on_server.models.membership.second_attempt.Acce
 import javax.persistence.Entity;
 import java.time.LocalDate;
 
-public interface Membership extends AccessMechanism {
+@Entity
+public abstract class Membership extends AccessMechanism {
 
-    LocalDate getStartDate();
-    LocalDate getEndDate();
+    public abstract LocalDate getStartDate();
+
+    public abstract LocalDate getEndDate();
 }
