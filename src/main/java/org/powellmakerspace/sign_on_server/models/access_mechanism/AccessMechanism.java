@@ -1,10 +1,13 @@
 package org.powellmakerspace.sign_on_server.models.access_mechanism;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.hibernate.annotations.Cascade;
 import org.powellmakerspace.sign_on_server.models.Member;
 
 import javax.persistence.*;
 
 @Entity
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 public abstract class AccessMechanism {
 
     @Id

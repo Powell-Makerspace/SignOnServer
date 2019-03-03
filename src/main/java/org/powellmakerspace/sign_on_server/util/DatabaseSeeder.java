@@ -6,8 +6,10 @@ import org.powellmakerspace.sign_on_server.config.DbSeederProperties;
 import org.powellmakerspace.sign_on_server.exception.ResourceNotFoundException;
 import org.powellmakerspace.sign_on_server.models.Member;
 import org.powellmakerspace.sign_on_server.models.Visit;
+import org.powellmakerspace.sign_on_server.models.access_mechanism.membership.IndividualMembership;
 import org.powellmakerspace.sign_on_server.models.enums.RentalType;
 import org.powellmakerspace.sign_on_server.models.enums.VisitPurpose;
+import org.powellmakerspace.sign_on_server.services.AccessMechanismService;
 import org.powellmakerspace.sign_on_server.services.MemberService;
 import org.powellmakerspace.sign_on_server.services.VisitService;
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -53,6 +57,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     private DbSeederProperties dbSeederProperties;
     private MemberService memberService;
     private VisitService visitService;
+    private AccessMechanismService accessMechanismService;
 
     /**
      * Create a new instance of the DatabaseSeeder Utility
@@ -63,14 +68,18 @@ public class DatabaseSeeder implements CommandLineRunner {
      */
     public DatabaseSeeder(
             DbSeederProperties dbSeederProperties,
-            MemberService memberService, VisitService visitService
+            MemberService memberService,
+            VisitService visitService,
+            AccessMechanismService accessMechanismService
     ) {
         this.dbSeederProperties = dbSeederProperties;
         this.memberService = memberService;
         this.visitService = visitService;
+        this.accessMechanismService = accessMechanismService;
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws ResourceNotFoundException {
 
         long systemTime = 0;
@@ -86,14 +95,13 @@ public class DatabaseSeeder implements CommandLineRunner {
         for (int i = 0; i < dbSeederProperties.getNumberOfMembers(); i++){
             Member member = new Member();
             member.setMemberName(faker.hobbit().character());
-//            member.setAccessMechanismId(rentalTypes[faker.random().nextInt(rentalTypes.length)]);
-//            if (member.getAccessMechanismId() == RentalType.PUNCH_PASS){
-//                member.setPunchPasses(faker.random().nextInt(10));
-//            }
-//            else {
-//                member.setPunchPasses(-1);
-//            }
+            IndividualMembership individualMembership = new IndividualMembership();
+            individualMembership.setMember(member);
+            individualMembership.setStartDate(LocalDate.now());
+            individualMembership.setEndDate(LocalDate.now().plusMonths(faker.random().nextInt(20)));
+            member.setAccessMechanism(individualMembership);
 
+            accessMechanismService.createAccessMechanism(individualMembership);
             memberService.createMember(member);
         }
 
@@ -130,6 +138,11 @@ public class DatabaseSeeder implements CommandLineRunner {
         if (logger.isInfoEnabled()){
             logger.info("Stopping Database Seeding Utility. Time: {}",
                     (System.currentTimeMillis() - systemTime)/1000.0);
+        }
+
+        accessMechanismService.getAllIndividualMemberships();
+        for (IndividualMembership individualMembership : accessMechanismService.getAllIndividualMemberships()){
+            logger.info(individualMembership.toString());
         }
     }
 }
