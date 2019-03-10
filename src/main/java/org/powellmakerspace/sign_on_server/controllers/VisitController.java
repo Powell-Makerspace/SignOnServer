@@ -1,8 +1,6 @@
 package org.powellmakerspace.sign_on_server.controllers;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.powellmakerspace.sign_on_server.exception.ResourceNotFoundException;
 import org.powellmakerspace.sign_on_server.models.Visit;
@@ -11,10 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@Api(
-        value = "Visit API",
-        description = "Provides functionality for updating and retrieving visit objects."
-)
+@Api
 @RestController
 @RequestMapping("/api/visits")
 public class VisitController {

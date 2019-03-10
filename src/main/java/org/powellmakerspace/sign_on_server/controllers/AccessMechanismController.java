@@ -1,16 +1,11 @@
 package org.powellmakerspace.sign_on_server.controllers;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.powellmakerspace.sign_on_server.models.access_mechanism.AccessMechanism;
 import org.powellmakerspace.sign_on_server.services.AccessMechanismService;
 import org.springframework.web.bind.annotation.*;
 
-@Api(
-        value = "AccessMechanism API",
-        description = "Provides functionality for updating and retrieving AccessMechanism objects."
-)
+@Api
 @RestController
 @RequestMapping("/api/accessmechanisms")
 public class AccessMechanismController {
