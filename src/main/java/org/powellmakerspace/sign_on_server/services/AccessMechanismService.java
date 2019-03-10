@@ -1,7 +1,6 @@
 package org.powellmakerspace.sign_on_server.services;
 
 import org.powellmakerspace.sign_on_server.exception.ResourceNotFoundException;
-import org.powellmakerspace.sign_on_server.models.Member;
 import org.powellmakerspace.sign_on_server.models.access_mechanism.AccessMechanism;
 import org.powellmakerspace.sign_on_server.models.access_mechanism.membership.IndividualMembership;
 import org.powellmakerspace.sign_on_server.repositories.AccessMechanismRepository;
