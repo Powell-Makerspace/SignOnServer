@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
         description = "Provides functionality for updating and retrieving AccessMechanism objects."
 )
 @RestController
-@RequestMapping("/accessmechanisms")
+@RequestMapping("/api/accessmechanisms")
 public class AccessMechanismController {
 
     private AccessMechanismService accessMechanismService;

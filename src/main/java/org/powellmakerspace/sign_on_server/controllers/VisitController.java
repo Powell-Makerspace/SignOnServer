@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
         description = "Provides functionality for updating and retrieving visit objects."
 )
 @RestController
-@RequestMapping("/visits")
+@RequestMapping("/api/visits")
 public class VisitController {
 
     private VisitService visitService;

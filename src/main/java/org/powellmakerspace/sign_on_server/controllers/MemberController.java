@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
         description = "Provides functionality for updating and retrieving member objects."
 )
 @RestController
-@RequestMapping("/members")
+@RequestMapping("/api/members")
 public class MemberController {
 
     private MemberService memberService;
