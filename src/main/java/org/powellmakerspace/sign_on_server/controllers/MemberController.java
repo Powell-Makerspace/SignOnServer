@@ -45,7 +45,7 @@ public class MemberController {
             value = "updateMember",
             notes = "Update a given member in the repository"
     )
-    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
+    @PostMapping(path = "/{id}")
     public void updateMember(
             @ApiParam(
                     value = "memberId of the member to be updated",
