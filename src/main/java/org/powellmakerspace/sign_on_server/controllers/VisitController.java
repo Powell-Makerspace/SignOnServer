@@ -35,7 +35,7 @@ public class VisitController {
             value = "createVisit",
             notes = "Add new visit to the repository"
     )
-    @RequestMapping(path = "", method = RequestMethod.PUT)
+    @PutMapping(path = "")
     public void createVisit(
             @ApiParam(
                     value = "visit object to be created",
@@ -52,7 +52,7 @@ public class VisitController {
             value = "updateVisit",
             notes = "Update a given visit in the repository"
     )
-    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
+    @PostMapping(path = "/{id}")
     public void updateVisit(
             @ApiParam(
                     value = "visitId of the visit to be updated",
@@ -77,7 +77,7 @@ public class VisitController {
             value = "getVisit",
             notes = "Retrieves a visit matching the provided memberId"
     )
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @GetMapping(path = "/{id}")
     public Visit getVisit(
             @ApiParam(
                     value = "long visitId",
@@ -94,7 +94,7 @@ public class VisitController {
             response = Visit.class,
             responseContainer = "List"
     )
-    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    @GetMapping(path = "/search")
     public Iterable<Visit> searchVisits(
             @RequestParam(value = "active", required = false, defaultValue = "false")
                     boolean active,

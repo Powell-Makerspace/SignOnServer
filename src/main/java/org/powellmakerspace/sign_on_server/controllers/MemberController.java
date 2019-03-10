@@ -33,7 +33,7 @@ public class MemberController {
             value = "createMember",
             notes = "Add new member to the repository"
     )
-    @RequestMapping(path = "", method = RequestMethod.PUT)
+    @PutMapping(path = "")
     public void createMember(
             @ApiParam(
                     value = "member object to be created",
@@ -77,7 +77,7 @@ public class MemberController {
             response = Member.class,
             responseContainer = "List"
     )
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @GetMapping(path = "")
     public Iterable<Member> getMembers(
             @ApiParam(
                     value = "Full or partial member name to filter search"
@@ -97,7 +97,7 @@ public class MemberController {
             notes = "Retrieves a member matching the provided memberId",
             response = Member.class
     )
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @GetMapping(path = "/{id}")
     public Member getMember(
             @ApiParam(
                     value = "long memberId",
