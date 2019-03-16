@@ -1,20 +1,15 @@
 package org.powellmakerspace.sign_on_server.controllers;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.powellmakerspace.sign_on_server.exception.ResourceNotFoundException;
 import org.powellmakerspace.sign_on_server.models.Member;
 import org.powellmakerspace.sign_on_server.models.access_mechanism.AccessMechanism;
 import org.powellmakerspace.sign_on_server.services.MemberService;
 import org.springframework.web.bind.annotation.*;
 
-@Api(
-        value = "Member API",
-        description = "Provides functionality for updating and retrieving member objects."
-)
+@Api
 @RestController
-@RequestMapping("/members")
+@RequestMapping("/api/members")
 public class MemberController {
 
     private MemberService memberService;
@@ -33,7 +28,7 @@ public class MemberController {
             value = "createMember",
             notes = "Add new member to the repository"
     )
-    @RequestMapping(path = "", method = RequestMethod.PUT)
+    @PutMapping(path = "")
     public void createMember(
             @ApiParam(
                     value = "member object to be created",
@@ -50,7 +45,7 @@ public class MemberController {
             value = "updateMember",
             notes = "Update a given member in the repository"
     )
-    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
+    @PostMapping(path = "/{id}")
     public void updateMember(
             @ApiParam(
                     value = "memberId of the member to be updated",
@@ -77,7 +72,7 @@ public class MemberController {
             response = Member.class,
             responseContainer = "List"
     )
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @GetMapping(path = "")
     public Iterable<Member> getMembers(
             @ApiParam(
                     value = "Full or partial member name to filter search"
@@ -97,7 +92,7 @@ public class MemberController {
             notes = "Retrieves a member matching the provided memberId",
             response = Member.class
     )
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @GetMapping(path = "/{id}")
     public Member getMember(
             @ApiParam(
                     value = "long memberId",
