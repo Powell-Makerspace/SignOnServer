@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: signon-server-backend
+  labels:
+    app: signon-server-backend
+    env: dev
+    client: makerspace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: signon-server-backend
+  template:
+    metadata:
+      labels:
+        app: signon-server-backend
+        env: dev
+        client: makerspace
+    spec:
+      containers:
+      - name: signon-server-backend
+        image: gcr.io/double-fusion-210318/signon-server-backend:latest
+        ports:
+        - containerPort: 8080
