@@ -1,0 +1,12 @@
+steps:
+#    - name: gcr.io/cloud-builders/git
+#      args: [ 'clone', 'https://github.com/Powell-Makerspace/SignOnServer' ]
+    
+    - name: gcr.io/cloud-builders/gradle 
+      args: [ 'build', 'bootjar' ]
+
+    - name: gcr.io/cloud-builders/docker
+      args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/signon-server-backend:$BUILD_ID', '-f', 'ci/Dockerfile', '.' ]
+
+    - name: gcr.io/cloud-builders/docker
+      args: [ 'push', 'gcr.io/$PROJECT_ID/signon-server-backend:$BUILD_ID' ]
