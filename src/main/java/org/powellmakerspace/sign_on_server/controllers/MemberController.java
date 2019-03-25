@@ -77,13 +77,19 @@ public class MemberController {
             @ApiParam(
                     value = "Full or partial member name to filter search"
             )
-            @RequestParam(value = "memberName", required = false) String memberName,
+            @RequestParam(value = "memberName", required = false)
+            String memberName,
             @ApiParam(
                     value = "membership Type to filter search (enum)"
             )
-            @RequestParam(value = "membershipType", required = false) AccessMechanism membershipType
+            @RequestParam(value = "membershipType", required = false)
+            AccessMechanism membershipType,
+            @RequestParam(value = "page-offset", defaultValue = "1")
+            int pageOffset,
+            @RequestParam(value = "page-size", defaultValue = "20")
+            int pageSize
     ) {
-        return memberService.getMembers(memberName,  membershipType);
+        return memberService.getMembers(memberName,  membershipType, pageOffset, pageSize);
     }
 
 

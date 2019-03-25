@@ -48,40 +48,40 @@ public class MemberControllerTest {
     public void getMembersNullNull_success(){
 
         new Expectations(){{
-            memberService.getMembers(null, null);
+            memberService.getMembers(null, null, anyInt, anyInt);
         }};
 
-        memberController.getMembers(null, null);
+        memberController.getMembers(null, null, 1, 1);
     }
 
     @Test
     public void getMembersNameNull_success(){
 
         new Expectations(){{
-           memberService.getMembers("Bilbo Baggins", null);
+           memberService.getMembers("Bilbo Baggins", null, anyInt, anyInt);
         }};
 
-        memberController.getMembers("Bilbo Baggins", null);
+        memberController.getMembers("Bilbo Baggins", null, 1, 1);
     }
 
     @Test
     public void getMembersNullType_success(){
 
         new Expectations(){{
-            memberService.getMembers(null, null);
+            memberService.getMembers(null, null, anyInt, anyInt);
         }};
 
-        memberController.getMembers(null, null);
+        memberController.getMembers(null, null, 1, 1);
     }
 
     @Test
     public void getMembersNameType_success(){
 
         new Expectations(){{
-           memberService.getMembers("Bilbo Baggins", null);
+           memberService.getMembers("Bilbo Baggins", null, anyInt, anyInt);
         }};
 
-        memberController.getMembers("Bilbo Baggins", null);
+        memberController.getMembers("Bilbo Baggins", null, 1, 1);
     }
 
     @Test(expected = IOException.class)

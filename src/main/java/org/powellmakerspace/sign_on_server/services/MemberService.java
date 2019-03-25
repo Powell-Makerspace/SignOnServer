@@ -8,20 +8,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
 
     private static Logger logger = LoggerFactory.getLogger(MemberService.class);
 
+    private EntityManager entityManager;
     private MemberRepository memberRepository;
 
     /**
      * Constructor of the Member Service
      * @param memberRepository member repository layer
      */
-    public MemberService(MemberRepository memberRepository){
+    public MemberService(EntityManager entityManager, MemberRepository memberRepository){
+        this.entityManager = entityManager;
         this.memberRepository = memberRepository;
     }
 
@@ -73,19 +81,33 @@ public class MemberService {
      * @param membershipType membershipType to filter by
      * @return Iterable list of member objects with given filters
      */
-    public Iterable<Member> getMembers(String memberName, AccessMechanism membershipType) {
-        if (memberName == null && membershipType == null){
-            return memberRepository.findAll();
-        }
-        return null;
-//        else if (memberName != null && membershipType == null) {
-//            return memberRepository.findMembersByMemberNameLike(memberName);
-//        }
-//        else if (memberName == null /* && membershipType != null */) { // Comment not logically needed for functionality
-//            return memberRepository.findMembersByMembershipType(membershipType);
-//        }
-//        else {
-//            return memberRepository.findMembersByMemberNameLikeAndMembershipType(memberName, membershipType);
-//        }
+    public Iterable<Member> getMembers(
+            String memberName, // query parameter
+            AccessMechanism membershipType, // query parameter 
+            int pageOffset,
+            int pageSize
+    ) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Member> query = builder.createQuery(Member.class);
+
+        query.select(query.from(Member.class));
+
+        TypedQuery<Member> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(pageOffset);
+        typedQuery.setMaxResults(pageSize);
+
+
+        // TODO the @JsonIgnore is bing ignored here resulting in all the visits for each member being sent in the
+        // request as well. The temporary fix is to just remove them, but we should figure out why @jsonignore is being
+        // ignored
+        // return typedQuery.getResultList()
+        return typedQuery.getResultList()
+                .stream()
+                .map(
+                    member -> {
+                        member.setVisits(Collections.emptyList());
+                        return member;
+                    }
+                ).collect(Collectors.toList());
     }
 }
