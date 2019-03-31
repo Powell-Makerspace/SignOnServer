@@ -23,3 +23,12 @@ spec:
         image: gcr.io/double-fusion-210318/signon-server-backend:latest
         ports:
         - containerPort: 8080
+        readinessProbe:
+          exec:
+            command:
+              - echo
+              - "healthy"
+          timeoutSeconds: 5
+          initialDelaySeconds: 5
+          periodSeconds: 5
+

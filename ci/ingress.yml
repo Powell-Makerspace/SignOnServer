@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: makerspace-ingress
+spec:
+  rules:
+    - host: makerspace-dev.powellmakerspace.org
+      http:
+        paths:
+          - path: /api/*
+            backend:
+              serviceName: signon-backend
+              servicePort: 80
+    - host: sonarqube.powellmakerspace.org
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: sonarqube
+              servicePort: 80
+  serviceName: signon-backend
+  servicePort: 80
