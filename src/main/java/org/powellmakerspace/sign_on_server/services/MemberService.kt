@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 class MemberService(private val entityManager: EntityManager, private val memberRepository: MemberRepository) {
 
-//    private val logger = LoggerFactory.getLogger(MemberService::class)!
+    private val logger = LoggerFactory.getLogger(MemberService::class.java)
 
 
     /**
@@ -70,17 +70,29 @@ class MemberService(private val entityManager: EntityManager, private val member
      * @return Iterable list of member objects with given filters
      */
     fun getMembers(
-            memberName: String?, // query parameter
-            membershipType: AccessMechanism?, // query parameter 
-            pageOffset: Int,
-            pageSize: Int
+            memberName: String?, membershipType: AccessMechanism?, pageOffset: Int, pageSize: Int
     ): Iterable<Member> {
+
         val builder = entityManager.criteriaBuilder
         val query = builder.createQuery(Member::class.java)
 
-        query.select(query.from(Member::class.java))
+        val root = query.from(Member::class.java);
+        query.select(root)
 
+        val memberNameParameter = builder.parameter(String::class.java);
+        if (memberName != null) {
+            query.where(builder.like(root.get("memberName"), memberNameParameter));
+        }
+        if (membershipType != null) {
+
+        }
+        
         val typedQuery = entityManager.createQuery(query)
+        if (memberName != null) {
+            // FIXME sql injection vulnerablility!!
+            typedQuery.setParameter(memberNameParameter, "%${memberName}%")
+        }
+
         typedQuery.firstResult = pageOffset
         typedQuery.maxResults = pageSize
 

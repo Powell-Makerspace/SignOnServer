@@ -112,7 +112,7 @@ public class DatabaseSeeder implements CommandLineRunner {
                 try {
                     visit.setMember(memberService.getMember(faker.random().nextInt(1, dbSeederProperties.getNumberOfMembers())));
                     break;
-                } catch (ResourceNotFoundException e) {
+                } catch (Exception e) { // ResourceNotFoundException
 
                 }
             }
